@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Environment secrets
+.env
+*.env.local
+
+# Model weights (too large for git, keep out of repo)
+model/trained_adapter/*
+model/gguf_export/*
+!model/trained_adapter/.gitkeep
+!model/gguf_export/.gitkeep
+
+# Dataset (large files optional - track structure only)
+model/dataset/raw/*
+model/dataset/processed/*
+!model/dataset/raw/.gitkeep
+!model/dataset/processed/.gitkeep
+
+# OS/IDE
+.DS_Store
+.vscode/
+*.log
+
+# Database
+*.db
+*.sqlite3
