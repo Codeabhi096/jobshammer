@@ -57,6 +57,18 @@ if st.button("Calculate Match"):
         if response.status_code == 200:
             data = response.json()
             st.metric("Match Score", f"{data['match_score']}%")
+
+            if not data["skill_data_available"]:
+                st.warning(
+                    "Is job description me koi specific technical skill detect nahi hui — "
+                    "score sirf overall semantic similarity par based hai, isliye kam reliable ho sakta hai."
+                )
+
+            st.caption(
+                f"Embedding similarity: {data['embedding_score']}% | "
+                f"Skill overlap: {data['skill_overlap_score']}%"
+            )
+
             if data["missing_skills"]:
                 st.write("**Missing Skills:**", ", ".join(data["missing_skills"]))
             else:

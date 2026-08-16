@@ -1,17 +1,17 @@
+import json
+from pathlib import Path
 import spacy
 from spacy.matcher import PhraseMatcher
 
 nlp = spacy.load("en_core_web_sm")
 
+# Load skills from external JSON (categorized), flatten into one list
+SKILLS_FILE = Path(__file__).resolve().parent.parent / "data" / "skills.json"
 
-SKILLS_LIST = [
-    "Python", "SQL", "Machine Learning", "Deep Learning", "Scikit-learn",
-    "PyTorch", "TensorFlow", "Computer Vision", "OpenCV", "YOLOv8",
-    "NLP", "LLMs", "Generative AI", "RAG", "LangChain", "Hugging Face",
-    "Prompt Engineering", "FAISS", "CrewAI", "Pandas", "NumPy",
-    "Matplotlib", "Seaborn", "Power BI", "Tableau", "FastAPI",
-    "Streamlit", "Django", "Flask", "Docker", "Git", "AWS", "MySQL"
-]
+with open(SKILLS_FILE, "r", encoding="utf-8") as f:
+    skills_by_category = json.load(f)
+
+SKILLS_LIST = [skill for category in skills_by_category.values() for skill in category]
 
 matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
 patterns = [nlp.make_doc(skill) for skill in SKILLS_LIST]

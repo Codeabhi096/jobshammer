@@ -1,0 +1,39 @@
+{
+  "programming_languages": [
+    "Python", "SQL", "Java", "C++", "C", "JavaScript", "TypeScript", "R", "Go", "Rust", "Scala", "Kotlin", "Bash", "Shell Scripting"
+  ],
+  "ml_dl": [
+    "Machine Learning", "Deep Learning", "Scikit-learn", "PyTorch", "TensorFlow", "Keras",
+    "XGBoost", "LightGBM", "CatBoost", "Computer Vision", "OpenCV", "YOLOv8", "YOLO",
+    "DeepFace", "Image Segmentation", "Object Detection", "GANs", "Transfer Learning",
+    "Reinforcement Learning", "Time Series Forecasting", "ONNX", "MLflow", "Feature Engineering",
+    "Hyperparameter Tuning", "GridSearchCV", "Model Deployment"
+  ],
+  "nlp_genai": [
+    "NLP", "LLMs", "Generative AI", "RAG", "LangChain", "LangGraph", "LlamaIndex",
+    "Hugging Face", "Prompt Engineering", "FAISS", "Pinecone", "ChromaDB", "Weaviate",
+    "CrewAI", "AutoGen", "Fine-tuning", "LoRA", "QLoRA", "PEFT", "Transformers",
+    "BERT", "GPT", "Llama", "Whisper", "Text-to-SQL", "Named Entity Recognition",
+    "Sentiment Analysis", "Topic Modeling", "spaCy", "NLTK", "Vector Databases",
+    "Semantic Search", "Embeddings", "Agentic AI", "Multi-Agent Systems"
+  ],
+  "data_tools": [
+    "Pandas", "NumPy", "EDA", "Data Cleaning", "ETL", "Data Pipelines", "Apache Spark",
+    "Apache Airflow", "Data Warehousing", "Statistical Analysis"
+  ],
+  "visualization_bi": [
+    "Matplotlib", "Seaborn", "Power BI", "Tableau", "Plotly", "KPI Dashboards", "Looker"
+  ],
+  "web_backend": [
+    "FastAPI", "Django", "Flask", "REST API", "GraphQL", "Node.js", "Express.js",
+    "Streamlit", "WebSocket", "Microservices"
+  ],
+  "cloud_devops": [
+    "Docker", "Kubernetes", "AWS", "Azure", "GCP", "CI/CD", "Jenkins", "Terraform",
+    "Git", "GitHub Actions", "Linux", "Nginx", "Serverless"
+  ],
+  "databases": [
+    "MySQL", "PostgreSQL", "MongoDB", "Redis", "SQLite", "Firebase", "DynamoDB",
+    "Elasticsearch"
+  ]
+}

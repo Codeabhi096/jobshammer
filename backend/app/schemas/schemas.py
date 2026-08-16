@@ -30,4 +30,8 @@ class MatchRequest(BaseModel):
 class MatchResponse(BaseModel):
     id: int
     match_score: float
+    embedding_score: float
+    skill_overlap_score: float | None
+    skill_data_available: bool
     missing_skills: List[str]
+    
