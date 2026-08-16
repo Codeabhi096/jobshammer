@@ -11,7 +11,8 @@ def calculate_match_score(resume_text: str, jd_text: str) -> float:
     resume_vec = get_embedding(resume_text)
     jd_vec = get_embedding(jd_text)
 
-    cosine_sim = dot(resume_vec, jd_vec) / (norm(resume_vec) * norm(jd_vec))
+    cosine_sim = float(dot(resume_vec, jd_vec) / (norm(resume_vec) * norm(jd_vec)))
+   
 
     # Cosine similarity is between -1 and 1; scale to 0-100 for readability
     score = round(((cosine_sim + 1) / 2) * 100, 2)
