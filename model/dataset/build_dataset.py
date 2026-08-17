@@ -11,9 +11,11 @@ from app.services.nlp_extractor import extract_skills  # noqa: E402
 RAW_CSV = Path(__file__).resolve().parent / "raw" / "train.csv"
 OUTPUT_JSONL = Path(__file__).resolve().parent / "processed" / "draft_dataset.jsonl"
 
-TARGET_COUNT = 160          # final number of examples we want
-MIN_RESUME_SKILLS = 3       # tech-relevance filter: resume must show at least this many skills
-MIN_JD_SKILLS = 2           # JD must require at least this many skills
+TARGET_COUNT = 160
+MIN_RESUME_SKILLS = 2        # loosened from 3
+MIN_JD_SKILLS = 1            # loosened from 2
+RESUME_CHAR_LIMIT = 4000     # increased from 1500
+JD_CHAR_LIMIT = 2500         # increased from 1000
 RANDOM_SEED = 42
 
 INSTRUCTION = (
@@ -48,11 +50,11 @@ def main():
     random.seed(RANDOM_SEED)
     df = pd.read_csv(RAW_CSV)
     df = df.dropna(subset=["resume_text", "job_description_text", "label"])
+    print(f"Total rows loaded: {len(df)}")
 
-    # Deduplicate: keep only the FIRST occurrence of each unique resume and each unique JD
-    # This maximizes diversity instead of seeing the same resume repeated across many rows
-    df = df.drop_duplicates(subset=["resume_text"])
-    df = df.drop_duplicates(subset=["job_description_text"])
+    # Single combined dedup instead of two sequential ones (which over-eliminated data)
+    df = df.drop_duplicates(subset=["resume_text", "job_description_text"])
+    print(f"Rows after deduplication: {len(df)}")
 
     df = df.sample(frac=1, random_state=RANDOM_SEED)  # shuffle
 
@@ -60,20 +62,21 @@ def main():
 
     written = 0
     skipped_not_tech = 0
+    skill_count_samples = []
 
     with open(OUTPUT_JSONL, "w", encoding="utf-8") as f:
         for _, row in df.iterrows():
             if written >= TARGET_COUNT:
                 break
 
-            resume_text = str(row["resume_text"])[:1500]
-            jd_text = str(row["job_description_text"])[:1000]
+            resume_text = str(row["resume_text"])[:RESUME_CHAR_LIMIT]
+            jd_text = str(row["job_description_text"])[:JD_CHAR_LIMIT]
             label = row["label"]
 
             resume_skills = extract_skills(resume_text)
             jd_skills = extract_skills(jd_text)
+            skill_count_samples.append((len(resume_skills), len(jd_skills)))
 
-            # Tech-relevance filter: skip roles with too few identifiable technical skills
             if len(resume_skills) < MIN_RESUME_SKILLS or len(jd_skills) < MIN_JD_SKILLS:
                 skipped_not_tech += 1
                 continue
@@ -92,6 +95,11 @@ def main():
 
     print(f"Done. {written} filtered, tech-relevant examples written to {OUTPUT_JSONL}")
     print(f"Skipped {skipped_not_tech} non-tech / low-signal rows during filtering.")
+
+    if skill_count_samples:
+        avg_resume_skills = sum(s[0] for s in skill_count_samples) / len(skill_count_samples)
+        avg_jd_skills = sum(s[1] for s in skill_count_samples) / len(skill_count_samples)
+        print(f"Diagnostic — avg resume skills matched: {avg_resume_skills:.1f}, avg JD skills matched: {avg_jd_skills:.1f}")
 
 
 if __name__ == "__main__":

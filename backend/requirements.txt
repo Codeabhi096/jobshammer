@@ -7,3 +7,4 @@ pdfplumber
 spacy
 sentence-transformers
 python-multipart
+pandas

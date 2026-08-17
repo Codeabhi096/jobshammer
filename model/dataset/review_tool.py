@@ -45,7 +45,7 @@ with col2:
 col_a, col_b, col_c = st.columns(3)
 
 with col_a:
-    if st.button("✅ Keep", use_container_width=True):
+    if st.button(" Keep", use_container_width=True):
         current["output"] = edited_output
         st.session_state.kept.append(current)
         st.session_state.index += 1
