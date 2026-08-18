@@ -8,3 +8,7 @@ spacy
 sentence-transformers
 python-multipart
 pandas
+transformers
+peft
+accelerate
+torch
